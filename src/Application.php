@@ -2,6 +2,7 @@
 
 namespace Src;
 
+use Exception;
 use GuzzleHttp\Client;
 use Symfony\Component\Uid\Uuid;
 use Src\Database;
@@ -53,6 +54,8 @@ class Application
 
         $queryBuilder = Database::getQueryBuilder();
 
+        throw new Exception('khong the lay users tu database', 500);
+        
         # query 
         $queryBuilder
             ->from('users')
