@@ -1,0 +1,26 @@
+{
+  "name": "admin/seotool",
+  "autoload": {
+    "psr-4": {
+      "Src\\": "src/"
+    },
+    "files": [
+      "utils/utils.php"
+    ]
+  },
+  "authors": [
+    {
+      "name": "Duc Thuan",
+      "email": "ducthuan1202@gmail.com"
+    }
+  ],
+  "require-dev": {
+    "symfony/var-dumper": "^5.4"
+  },
+  "require": {
+    "guzzlehttp/guzzle": "^7.5",
+    "vlucas/phpdotenv": "^5.4",
+    "doctrine/dbal": "^3.4",
+    "symfony/uid": "^5.4"
+  }
+}
