@@ -5,9 +5,18 @@ session_start();
 # show all error
 error_reporting(E_ALL);
 
+# check version
+if(version_compare(PHP_VERSION, '7.0.0', '<')){
+    exit('upgrade php version');
+}
+
+# check mode
+if(PHP_SAPI === 'cli'){
+    exit('php sapi invalid');
+}
+
 # define variables
 define('ROOT_PATH', dirname(__DIR__));
-define('BREAK_LINE', '<br/>');
 
 # autoload
 include ROOT_PATH . './vendor/autoload.php';
@@ -20,9 +29,11 @@ set_exception_handler('exception_handler');
 $dotenv = Dotenv\Dotenv::createUnsafeImmutable(ROOT_PATH);
 $dotenv->load();
 
-# initial stackholders
+# initial stakeholders
 Src\Config::initial();
 Src\Database::initial();
+
+date_default_timezone_set(config('app.timezone'));
 
 # start application
 $app = new Src\Application();

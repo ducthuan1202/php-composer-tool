@@ -15,11 +15,13 @@ class Config
         endforeach;
     }
 
+    public static function all()
+    {
+        return self::$entries;
+    }
+
     public static function get($key, $def = null)
     {
-        if (array_key_exists($key, self::$entries)) {
-            return self::$entries[$key];
-        }
-        return $def;
+        return arr_get_value(self::$entries, $key, $def);
     }
 }

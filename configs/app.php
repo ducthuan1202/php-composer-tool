@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'timezone' => 'Asia/Ho_Chi_Minh',
+    'env' => getenv('APP_ENV'),
+    'timezone' => getenv('TIMEZONE'),
 ];

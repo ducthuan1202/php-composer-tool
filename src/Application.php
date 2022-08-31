@@ -2,7 +2,6 @@
 
 namespace Src;
 
-use Exception;
 use GuzzleHttp\Client;
 use Symfony\Component\Uid\Uuid;
 use Src\Database;
@@ -36,7 +35,9 @@ class Application
             'timeout'  => 2.0,
         ]);
 
-        // https://jsonplaceholder.typicode.com/users
+        // trigger_error('cannot fetch data from network', E_USER_NOTICE);
+
+        # Send a request to https://jsonplaceholder.typicode.com/users
         $response = $client->request('GET', 'users');
 
         # request success
@@ -54,18 +55,21 @@ class Application
 
         $queryBuilder = Database::getQueryBuilder();
 
-        throw new Exception('khong the lay users tu database', 500);
+        // throw new Exception('cannot get users from database', 500);
         
         # query 
         $queryBuilder
             ->from('users')
             ->select(['id', 'name', 'email'])
-            ->where('email LIKE ?')
-            ->setParameter(0, '%@example.com')
-            ->andWhere('id > ?')
-            ->setParameter(1, 30)
+            ->where('email LIKE ?')->setParameter(0, '%@example.com')
+            ->andWhere('id > ?')->setParameter(1, 30);
+
+        $queryBuilder
             ->setFirstResult(0) // offset
-            ->setMaxResults(5); // limit
-        return $queryBuilder->fetchAllAssociative();
+            ->setMaxResults(15); // limit
+        
+        $data = $queryBuilder->fetchAllAssociative(); 
+
+        return $data;
     }
 }
