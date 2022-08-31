@@ -3,6 +3,7 @@
 namespace Src;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Cookie\CookieJar;
 use Symfony\Component\Uid\Uuid;
 use Src\Database;
 
@@ -16,10 +17,14 @@ class Application
 
         $usersDB = $this->getUserFromDatabase();
 
-        $usersNetwork = $this->getUserFromNetwork();
+        $usersNetwork = $this->getWithCookie();
 
         header('content-type: application/json');
-        
+
+        # $user = Arr::first($usersDB);
+        # $date = new DateTime($user['created_at'], new DateTimeZone('UTC'));
+        # $date = new DateTime($user['created_at']);
+
         echo json_encode([
             'request_id' => $uuid,
             'internal' => $usersDB,
@@ -27,7 +32,26 @@ class Application
         ]);
     }
 
-    function getUserFromNetwork()
+    function getWithCookie()
+    {
+
+        // CURL tới 1 website làm bằng Laravel, sử dụng cookie login để gửi request
+        $jar = CookieJar::fromArray([
+            config('app.cookie_account.name') => config('app.cookie_account.value'),
+        ], 'localhost');
+
+        $client = new Client([
+            'base_uri' => 'http://localhost:8000',
+            'timeout'  => 2.0,
+            'cookies' => $jar,
+        ]);
+
+        $response = $client->request('GET', 'page-member');
+
+        return json_decode($response->getBody(), true);
+    }
+
+    function getUsersFromNetwork()
     {
         # send request CURL
         $client = new Client([
@@ -56,19 +80,19 @@ class Application
         $queryBuilder = Database::getQueryBuilder();
 
         // throw new Exception('cannot get users from database', 500);
-        
+
         # query 
         $queryBuilder
             ->from('users')
-            ->select(['id', 'name', 'email'])
+            ->select(['id', 'name', 'email', 'created_at'])
             ->where('email LIKE ?')->setParameter(0, '%@example.com')
             ->andWhere('id > ?')->setParameter(1, 30);
 
         $queryBuilder
             ->setFirstResult(0) // offset
             ->setMaxResults(15); // limit
-        
-        $data = $queryBuilder->fetchAllAssociative(); 
+
+        $data = $queryBuilder->fetchAllAssociative();
 
         return $data;
     }

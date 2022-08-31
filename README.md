@@ -23,3 +23,19 @@ composer require symfony/uid
 # dump data
 composer require --dev symfony/var-dumper
 ```
+
+## Utils
+
+- MySQL
+```sql
+
+-- xem timezone cua DB hien tai --
+SHOW VARIABLES LIKE '%time_zone%';
+
+-- xem thời gian hiện tại trong DB, so sánh với giờ local để check timezone --
+SELECT NOW();
+
+-- set lại timezone cho toàn bộ DB là múi giờ +7
+SET GOLBAL time_zone = '+07:00';
+
+```
