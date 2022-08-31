@@ -22,6 +22,7 @@ class Config
 
     public static function get($key, $def = null)
     {
+        return Arr::get(self::$entries, $key, $def);
         return arr_get_value(self::$entries, $key, $def);
     }
 }
