@@ -100,9 +100,16 @@ $pattern = '/th(?!\(uận|úy))/i';
 # kiểm tra 1 chuỗi là dạng `năm-tháng-ngày`
 $pattern = '/(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})/';
 
+# nếu bắt đầu với 'q', thì phải là 'qu', nếu không thì phải bắt đầu với f
+$pattern = '/^(?(?=q)qu|f)/';
+
 # preg match giá trị ra mảng $matches
 preg_match($pattern, $str, $matches);
 
 # lọc chỉ lấy những giá trị là key đã định nghĩa trên pattern và giá trị khác rỗng.
 $onlyNamed = array_filter($matches, fn ($value, $key) => !is_numeric($key) && !empty($value), ARRAY_FILTER_USE_BOTH);
+
+# tìm kiếm và thay thế với chữ viết HOA
+$line = preg_replace_callback('/(?P<name>(thuan|tung|tam))/', fn ($matches) => strtoupper($matches['name']), 'nguyen duc thuan');
+// => nguyen duc THUAN 
 ```
