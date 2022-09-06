@@ -34,6 +34,7 @@ class Application
 
     function getWithCookie()
     {
+        return [];
 
         // CURL tới 1 website làm bằng Laravel, sử dụng cookie login để gửi request
         $jar = CookieJar::fromArray([
@@ -77,6 +78,7 @@ class Application
     public function getUserFromDatabase()
     {
 
+        return [];
         $queryBuilder = Database::getQueryBuilder();
 
         // throw new Exception('cannot get users from database', 500);

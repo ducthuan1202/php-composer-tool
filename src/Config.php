@@ -2,17 +2,25 @@
 
 namespace Src;
 
+use Symfony\Component\Yaml\Yaml;
 class Config
 {
     private static $entries = [];
 
     public static function initial()
     {
+        $values = Yaml::parseFile(ROOT_PATH . '/configs.yaml');
+        self::$entries = array_merge_recursive(self::$entries, $values);
+
+        $envValues = [];
         $files = glob(ROOT_PATH . './configs/*.php');
         foreach ($files as $file) :
             $name = basename($file, '.php');
-            self::$entries[$name] = require_once $file;
+            $envValues[$name] = require_once $file;
         endforeach;
+
+        # merge and overide values
+        self::$entries = array_replace_recursive(self::$entries, $envValues);
     }
 
     public static function all()

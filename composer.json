@@ -21,6 +21,7 @@
     "guzzlehttp/guzzle": "^7.5",
     "vlucas/phpdotenv": "^5.4",
     "doctrine/dbal": "^3.4",
-    "symfony/uid": "^5.4"
+    "symfony/uid": "^5.4",
+    "symfony/yaml": "^5.4"
   }
 }

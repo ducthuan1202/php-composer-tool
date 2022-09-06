@@ -11,6 +11,7 @@ class Database
     public static function initial()
     {
         $dbConfig = config('database');
+        dd($dbConfig);
         self::$conn = DriverManager::getConnection($dbConfig);
     }
 

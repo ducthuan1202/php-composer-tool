@@ -1,7 +1,8 @@
 # Docs
 
 ## Interface
-Trong PHP, `Interface` là một `Object`. Là tập hợp các phương thức public mà các lớp con triển khai phải có. Các phương thức chỉ bao gồm tên, tham số, không được chứa body;
+Trong PHP, `Interface` là một `Object`. Là tập hợp các phương thức public mà các lớp con triển khai phải có. 
+Các phương thức chỉ bao gồm tên, tham số, không được chứa body;
 
 ```php
 # Interface 
@@ -22,7 +23,8 @@ class User implements IUser {
 ```
 
 ## Class Abastraction
-Là một lớp trừu tượng, bao gồm cả các `function`, `property` ... Nếu có từ khóa `abastrct` phía trước `function`, thì nó là phương thức bắt buộc lớp con kế thừa phải khai báo. Abstract có thể chứa các phương thức cụ thể để dùng chung có các lớp con 
+Là một lớp trừu tượng, bao gồm cả các `function`, `property` ... Nếu có từ khóa `abastrct` phía trước `function`, 
+thì nó là phương thức bắt buộc lớp con kế thừa phải khai báo. Abstract có thể chứa các phương thức cụ thể để dùng chung có các lớp con 
 
 ```php 
 # Absctract
@@ -112,4 +114,16 @@ $onlyNamed = array_filter($matches, fn ($value, $key) => !is_numeric($key) && !e
 # tìm kiếm và thay thế với chữ viết HOA
 $line = preg_replace_callback('/(?P<name>(thuan|tung|tam))/', fn ($matches) => strtoupper($matches['name']), 'nguyen duc thuan');
 // => nguyen duc THUAN 
+```
+
+- `preg_filter`, `preg_replace` tìm kiếm và thay thế
+
+- `preg_match`, `preg_match_all` kiểm tra phù hợp
+
+- `preg_split` tách chuỗi
+
+- có thể sử dụng `$0` hoặc `\0` để áp dụng giá trị đầu tiên tìm thấy 
+
+```php
+preg_relace('/(\d{4})-(\d{2})/', '$1-$2);
 ```
