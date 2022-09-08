@@ -1,5 +1,7 @@
 <?php
 
+use Src\Config;
+
 session_start();
 
 # show all error
@@ -32,6 +34,7 @@ $dotenv->load();
 # initial stakeholders
 Src\Config::initial();
 Src\Database::initial();
+dd(Config::all());
 
 date_default_timezone_set(config('app.timezone'));
 

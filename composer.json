@@ -23,5 +23,17 @@
     "doctrine/dbal": "^3.4",
     "symfony/uid": "^5.4",
     "symfony/yaml": "^5.4"
+  },
+  "scripts": {
+    "post-autoload-dump": [
+      "@project-prepare"
+    ],
+    "post-root-package-install": [
+      "@project-prepare"
+    ],
+    "project-prepare": [
+      "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+      "@php -r \"file_exists('configs.yaml') || copy('configs.yaml.example', 'configs.yaml');\""
+    ]
   }
 }

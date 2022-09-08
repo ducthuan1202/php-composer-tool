@@ -11,7 +11,7 @@ class Config
     {
         $values = Yaml::parseFile(ROOT_PATH . '/configs.yaml');
         self::$entries = array_merge_recursive(self::$entries, $values);
-
+        
         $envValues = [];
         $files = glob(ROOT_PATH . './configs/*.php');
         foreach ($files as $file) :
